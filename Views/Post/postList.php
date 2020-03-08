@@ -22,7 +22,7 @@
                                         <li><a href=\"#\">Technology, </a></li>
                                         <li><a href=\"#\">Fashion</a></li>
                                     </ul>
-                                    <a href=\"blog-single.html\">
+                                    <a href=\"$link\">
                                         <h1>$title</h1>
                                     </a>
                                     <p>$text...</p>

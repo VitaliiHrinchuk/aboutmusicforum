@@ -9,7 +9,12 @@
                 </h1>
                 <p class="pt-20 pb-20 text-white">
                     "Музика навіть у найжахливіших драматичних положеннях повинна завжди полонити слух, завжди залишатися музикою." ©  Вольфганг Амадей Моцарт              </p>
-                <a href="#" class="primary-btn text-uppercase">Rent Car Now</a>
+                <?php
+                if(!isset($_SESSION['id'])){
+                    $link = WEBROOT.'login';
+                    echo "<a href=\"$link\" class=\"primary-btn text-uppercase\">Авторизуватись</a>";
+                }
+                ?>
             </div>
             <?php
                 if(!isset($_SESSION['id'])) {

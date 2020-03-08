@@ -30,18 +30,13 @@
             <nav id="nav-menu-container">
                 <ul class="nav-menu">
                     <li class="menu-active"><a href="<?php echo WEBROOT?>">Головна</a></li>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="cars.html">Cars</a></li>
-                    <li><a href="service.html">Service</a></li>
-                    <li><a href="team.html">Team</a></li>
+                    <li><a href="about.html">Композитори</a></li>
+                    <li><a href="<?php echo WEBROOT.'compositions'?>">Відомі твори</a></li>
+                    <li><a href="service.html">Ноти</a></li>
+                    <li><a href="team.html">Сучасна класична музика</a></li>
+                    <li><a href="<?php echo WEBROOT.'forum'?>">Форум</a></li>
                     <li><a href="<?php echo WEBROOT.'post'?>">Новини</a></li>
                     <li><a href="contact.html">Контакти</a></li>
-                    <li class="menu-has-children"><a href="">Pages</a>
-                        <ul>
-                            <li><a href="blog-single.html">Blog Single</a></li>
-                            <li><a href="elements.html">Elements</a></li>
-                        </ul>
-                    </li>
                     <?php
                     if(!isset($_SESSION["id"])){
                         $link = WEBROOT."login";

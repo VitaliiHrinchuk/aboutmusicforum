@@ -17,6 +17,7 @@ class Post extends Model
         }
         print($req->errorInfo()[2]);
     }
+
     public function getLastPosts(){
         $sql = "SELECT SQL_CALC_FOUND_ROWS id,(SELECT COUNT(*) FROM comments WHERE (post_id = posts.id)) AS comment_count, `id`, `theme`, `content`, `bg_img`, `creation_date` FROM `posts`  ORDER BY creation_date DESC LIMIT 9 ";
         $req = Database::getBdd()->prepare($sql);

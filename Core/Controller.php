@@ -9,17 +9,8 @@
         }
         function render($filename)
         {
-            //require (ROOT."Models/Teacher.php");
-            if(!class_exists("Teacher")) require (ROOT."Models/Teacher.php");
-            $teacher = new Teacher();
-            $logoName = $teacher->getSurname()["last_name"];
-            $categories = $teacher->getCategories();
-            foreach ($categories as &$cat){
-                $id = $cat["id"];
-                $cat["children"] = $teacher->getSubCategories($id);
-            }
-            array_push($this->vars, $logoName);
-            array_push($this->vars, $categories);
+
+
             extract($this->vars);
             ob_start();
             require(ROOT . "Views/" . ucfirst(str_replace('Controller', '', get_class($this))) . '/' . $filename . '.php');
