@@ -20,7 +20,7 @@
                                 <th>Ім'я</th>
                                 <th>Коментарі</th>
                                 <th>Редагувати</th>
-                                <th>Видалити</th>
+
                             </tr>
                             </thead>
                             <tfoot>
@@ -30,7 +30,7 @@
                                 <th>Ім'я</th>
                                 <th>Коментарі</th>
                                 <th>Редагувати</th>
-                                <th>Видалити</th>
+
                             </tr>
                             </tfoot>
                             <tbody>
@@ -49,7 +49,6 @@
                                                 <td>$name</td>
                                                 <td class='text-center'><a href='$commentsUrl' class='btn btn-dark btn-sm'>Коментарі</a></td>
                                                 <td class='text-center'><a href='$editUrl' class='btn btn-primary btn-sm'>Редагувати</a></td>
-                                                <td class='text-center'><a href='$deleteUrl' class='btn btn-danger btn-sm'>Видалити</a></td>
                                             </tr>";
                                 }
                             }

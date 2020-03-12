@@ -12,15 +12,19 @@
                         if(strlen($text) > 250){
                             $text =  substr($text, 0, 200);
                         }
+                        $categories = $post['categories'];
+                        $catLinks = '';
+                        foreach ($categories as $category){
+                            $name = $category["name"].' | ';
+                            $catLinks .= "<li><a href='#'>$name</a></li> ";
+                        }
                         $img = PUBLIC_DIR."/img/posts/".$post["bg_img"];
                         $date = date("d.m.Y",strtotime($post["creation_date"]));
                         $link = WEBROOT."post/read/".$post["id"];
                         echo "<div class=\"single-post\">
                                     <img class=\"img-fluid\" src=\"$img\" alt=\"\">
                                     <ul class=\"tags\">
-                                        <li><a href=\"#\">Art, </a></li>
-                                        <li><a href=\"#\">Technology, </a></li>
-                                        <li><a href=\"#\">Fashion</a></li>
+                                        $catLinks
                                     </ul>
                                     <a href=\"$link\">
                                         <h1>$title</h1>

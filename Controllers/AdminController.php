@@ -181,6 +181,9 @@ class AdminController extends Controller{
         if($this->checkIsAdmin()){
             require (ROOT."Models/Admin.php");
             $admin = new Admin();
+            require (ROOT.'Models/Categories.php');
+
+            $categories = new Categories();
             if(!empty($_POST)){
                 if(file_exists($_FILES['bg']['tmp_name'])){
                     print_r($_FILES);
@@ -193,11 +196,15 @@ class AdminController extends Controller{
                 }
                 if(!isset($_POST["content"]) || empty($_POST["content"]) || !isset($_POST["theme"])) header('Location:'.$_SERVER['HTTP_REFERER']);
                 $result = $admin->editPost($id, $_POST["theme"], $_POST["content"], $bg);
-                if($result) {
+                $catRes = $categories->addPostCategory($id, $_POST['categories']);
+
+                if($catRes) {
                     header('Location:'.HOST.'admin/postList');
                 }
             } else {
                 $viewData = $admin->getPost($id);
+                $viewData["categories"] = $categories->getCategories();
+                $viewData['selectedCategories'] = $categories->getByPost($id);
                 $this->set($viewData);
                 $this->render("post-create");
             }
@@ -208,6 +215,10 @@ class AdminController extends Controller{
     }
     function postCreate(){
         if($this->checkIsAdmin()){
+            require (ROOT.'Models/Categories.php');
+
+            $categories = new Categories();
+
             if(!empty($_POST)){
                 require(ROOT . 'Models/Admin.php');
                 $admin = new Admin();
@@ -219,12 +230,15 @@ class AdminController extends Controller{
                 } else {
                     header('Location:'.$_SERVER['HTTP_REFERER']);
                 }
-                if(!isset($_POST["content"]) || empty($_POST["content"]) || !isset($_POST["theme"])) header('Location:'.$_SERVER['HTTP_REFERER']);
+                if(!isset($_POST["content"]) || empty($_POST["content"]) || !isset($_POST["theme"])|| !isset($_POST["categories"])) header('Location:'.$_SERVER['HTTP_REFERER']);
                 $result = $admin->createPost($_POST["theme"], $_POST["content"], $bg);
                 if($result) {
-                    header('Location:'.HOST.'admin/postList');
+                    $catRes = $categories->addPostCategory($result, $_POST['categories']);
+                    if($catRes) header('Location:'.HOST.'admin/postList');
                 }
             } else {
+                $viewData["categories"] = $categories->getCategories();
+                $this->set($viewData);
                 $this->render("post-create");
             }
 
@@ -232,143 +246,10 @@ class AdminController extends Controller{
             header('Location:'.HOST.'admin/login');
         }
     }
-    function albums(){
-        if(!$this->checkIsAdmin()) header('Location:'.HOST.'admin/login');
-        require (ROOT.'Models/Admin.php');
-        $admin = new Admin();
 
-        $viewData["albums"] = $admin->getAlbumList();
-        $this->set($viewData);
-        $this->render("album-list");
-    }
-    function albumEdit($id){
-        if($this->checkIsAdmin()){
-            require(ROOT . 'Models/Admin.php');
-            $admin = new Admin();
 
-            if(!empty($_POST)){
 
-                if(isset($_POST["name"])){
-                    $result = $admin->updateAlbum($id, $_POST["name"]);
-                    print_r($_POST);
-                    if(isset($_POST["delete"])){
-                        foreach ($_POST["delete"] as $del){
-                            $admin->deletePhoto($del);
-                        }
-                    }
-                    if($result){
-                        header("Location:".HOST."admin/albumEdit/$id");
-                    }
-                }
-            } else {
-                $viewData["id"] = $id;
-                $viewData["name"] = $admin->getAlbum($id)["name"];
-                $viewData["photos"] = $admin->getAlbumPhotos($id);
-                $this->set($viewData);
-                $this->render("album-edit");
-            }
 
-        } else {
-            header('Location:'.HOST.'admin/login');
-        }
-    }
-    function albumCreate(){
-
-        if($this->checkIsAdmin()){
-            require(ROOT . 'Models/Admin.php');
-            $admin = new Admin();
-            $result = $admin->createAlbum();
-
-            if($result){
-
-                header("Location:".HOST."admin/albumEdit/$result");
-            }
-
-        } else {
-            header('Location:'.HOST.'admin/login');
-        }
-    }
-    function projects(){
-        if(!$this->checkIsAdmin()) header('Location:'.HOST.'admin/login');
-        require (ROOT.'Models/Admin.php');
-        $admin = new Admin();
-        if(!empty($_POST)){
-            if(isset($_POST["name"]) && isset($_POST["id"])  && !empty($_POST["name"]) ){
-                $result = $admin->editProject($_POST["id"], $_POST["name"]);
-                $result = $admin->editProject($_POST["id"], $_POST["name"]);
-                if($result){
-                    header("Location:".HOST."admin/projects");
-
-                }
-            }
-        } else {
-            $viewData["projects"] = $admin->getProjectsList();
-            $this->set($viewData);
-            $this->render("project-list");
-        }
-
-    }
-    function projectAdd(){
-        if($this->checkIsAdmin()){
-            require(ROOT . 'Models/Admin.php');
-            $admin = new Admin();
-
-            if(!empty($_POST)){
-
-                if(isset($_POST["name"]) && file_exists($_FILES['file']['tmp_name'])){
-                    $file = $this->saveAudio("file");
-                    $result = $admin->addProject($_POST["name"], $file);
-                    print_r($_POST);
-                    if($result){
-                        header("Location:".HOST."admin/projects");
-
-                    }
-
-                } else {
-                   // header('Location:'.$_SERVER['HTTP_REFERER']);
-                    echo "wrong";
-                    print_r($_FILES["file"]);
-                }
-            } else {
-
-                $this->render("project-add");
-            }
-
-        } else {
-            header('Location:'.HOST.'admin/login');
-        }
-    }
-    function deleteProject($id){
-        if($this->checkIsAdmin()){
-            require(ROOT . 'Models/Admin.php');
-            $admin = new Admin();
-            $result = $admin->deleteProject($id);
-            if($result)header('Location:'.$_SERVER['HTTP_REFERER']);
-        } else {
-            header('Location:'.HOST.'admin/login');
-        }
-    }
-    function deleteAlbum($id){
-        if($this->checkIsAdmin()){
-            require(ROOT . 'Models/Admin.php');
-            $admin = new Admin();
-            $result = $admin->deleteAlbum($id);
-            if($result)header('Location:'.$_SERVER['HTTP_REFERER']);
-        } else {
-            header('Location:'.HOST.'admin/login');
-        }
-    }
-    function uploadPhoto($id){
-        if($this->checkIsAdmin()){
-            require(ROOT . 'Models/Admin.php');
-            $admin = new Admin();
-
-            $img = $this->saveImage($id.random_int(0, 1000), $_FILES['file']['tmp_name'], "albums/");
-            $result = $admin->uploadPhoto($id, $img);
-            echo json_encode(["msg"=>"ok"]);
-        }
-
-    }
     function about(){
         if($this->checkIsAdmin()){
             require(ROOT . 'Models/Admin.php');
@@ -402,88 +283,62 @@ class AdminController extends Controller{
     }
     function categories(){
         if(!$this->checkIsAdmin()) header('Location:'.HOST.'admin/login');
-        require (ROOT.'Models/Admin.php');
-        $admin = new Admin();
+        require (ROOT.'Models/Categories.php');
+        $categories = new Categories();
+        if(!empty($_POST)) {
+            $field = array( "name");
+            $data = $this->setData($_POST, $field);
 
-        $viewData["categories"] = $admin->getCategories();
-        $this->set($viewData);
-        $this->render("category-list");
-    }
-    function subCategories($id){
-        if(!$this->checkIsAdmin()) header('Location:'.HOST.'admin/login');
-        require (ROOT.'Models/Admin.php');
-        $admin = new Admin();
+            $name = $data["name"];
 
-        $viewData["categories"] = $admin->getSubCategories($id);
-        $viewData["parent"] = $admin->getCatName($id);
-        $this->set($viewData);
-        $this->render("subcat-list");
+
+            $result = $categories->addCategory($name);
+            if ($result) {
+                header('Location:' . HOST . 'admin/categories');
+
+            }
+        } else {
+
+
+            $viewData["categories"] = $categories->getCategories();
+            $this->set($viewData);
+            $this->render("category-list");
+        }
+
     }
+
     function deleteCategory($id){
         if($this->checkIsAdmin()){
-            require(ROOT . 'Models/Admin.php');
-            $admin = new Admin();
-            $result = $admin->deleteCategory($id);
+            require (ROOT.'Models/Categories.php');
+            $categories = new Categories();
+            $result = $categories->deleteCategory($id);
             if($result)header('Location:'.$_SERVER['HTTP_REFERER']);
 
         } else {
             header('Location:'.HOST.'admin/login');
         }
     }
-    function categoryAdd(){
+
+    function editCategory(){
 
         if($this->checkIsAdmin()){
-            require(ROOT . 'Models/Admin.php');
-            $admin = new Admin();
+            require (ROOT.'Models/Categories.php');
+            $categories = new Categories();
+
             if(!empty($_POST)){
-                $field = array("parent", "name", "content");
+                $field = array("name", "id");
                 $data = $this->setData($_POST, $field);
                 $parent = NULL;
                 $name = $data["name"];
-                $content = $data["content"];
-                if(isset($data["parent"]) && $data["parent"] != 0) $parent = $data["parent"];
-                $result = $admin->addCategory($name, $content, $parent);
+                $id = $data["id"];
+                $result = $categories->updateCategory($id,$name);
                 if($result){
                     header('Location:'.HOST.'admin/categories');
 
                 }
-                //print_r($data);
+
             } else {
-                $viewData["categories"] = $admin->getCategories();
-                $this->set($viewData);
-                $this->render("category-add");
-            }
-
-
-
-        } else {
-            header('Location:'.HOST.'admin/login');
-        }
-    }
-    function editCategory($id){
-
-        if($this->checkIsAdmin()){
-            require(ROOT . 'Models/Admin.php');
-            $admin = new Admin();
-            if(!empty($_POST)){
-                $field = array("parent", "name", "content");
-                $data = $this->setData($_POST, $field);
-                $parent = NULL;
-                $name = $data["name"];
-                $content = $data["content"];
-                if(isset($data["parent"]) && $data["parent"] != 0) $parent = $data["parent"];
-                $result = $admin->updateCategory($id,$name, $content, $parent);
-                if($result){
-                    header('Location:'.HOST.'admin/categories');
-
-                }
-                //print_r($data);
-            } else {
-                $viewData = $admin->getCategory($id);
-                $viewData["categories"] = $admin->getCategories();
-
-                $this->set($viewData);
-                $this->render("category-add");
+                header('Location:'.$_SERVER['HTTP_REFERER']);
             }
 
 
@@ -495,7 +350,7 @@ class AdminController extends Controller{
     private function saveImage($id, $image, $subdir){
         $rnd = random_int(0, 10000);
         $filename = $id."-$rnd.jpg";
-        $location = ROOT . "public/images/$subdir" . $filename;
+        $location = ROOT . "public/img/$subdir" . $filename;
 
         $this->compressImage($image, $location, 70);
         return $filename;

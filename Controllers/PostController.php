@@ -4,6 +4,8 @@ class PostController extends Controller{
         $this->checkUser();
         require(ROOT . "Models/Post.php");
         $post = new Post();
+        require (ROOT.'Models/Categories.php');
+        $categories = new Categories();
         if(!empty($_GET)){
             $title = isset($_GET["title"]) && !empty($_GET["title"]) ? $_GET["title"] : null;
             if(isset($_GET["offset"])){
@@ -17,6 +19,9 @@ class PostController extends Controller{
 
         $viewData['countOffset'] = $posts["count"];
         unset($posts['count']);
+        foreach ($posts as &$post){
+            $post['categories'] = $categories->getByPost($post['id']);
+        }
         $viewData["posts"] = $posts;
 
         $this->set($viewData);
@@ -28,10 +33,13 @@ class PostController extends Controller{
 
         require(ROOT . "Models/Post.php");
         require(ROOT . "Models/Comments.php");
+        require (ROOT.'Models/Categories.php');
+        $categories = new Categories();
         $comments = new Comments();
         $post = new Post();
         $singlePost = $post->getSinglePost($id);
         $viewData = $singlePost;
+        $viewData['categories'] = $categories->getByPost($id);
         $viewData["isAuthorized"] = false;
         if($this->checkUser()){
             $viewData["isAuthorized"] = true;

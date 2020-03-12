@@ -42,7 +42,7 @@
     <ul class="sidebar navbar-nav">
 
         <li class="nav-item">
-            <a class="nav-link" href="<?php echo WEBROOT."admin/about"?>">Портфоліо</a>
+            <a class="nav-link" href="<?php echo WEBROOT."admin/categories"?>">Категорії</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="<?php echo WEBROOT."admin/users"?>">Список Користувачів</a>
@@ -50,25 +50,10 @@
         <li class="nav-item">
             <a class="nav-link" href="<?php echo WEBROOT."admin/postList"?>">Список Публікацій</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="<?php echo WEBROOT."admin/albums"?>">Список Альбомів</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="<?php echo WEBROOT."admin/projects"?>">Список Проектів</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="<?php echo WEBROOT."admin/categories"?>">Список моїх розділів</a>
-        </li>
+
         <span class="w-100 d-block border-bottom border-dark" style="height: 1px"></span>
         <li class="nav-item">
             <a class="nav-link" href="<?php echo WEBROOT."admin/postCreate"?>">Створити Публікацію</a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link" href="<?php echo WEBROOT."admin/projectAdd"?>">Додати Проект</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="<?php echo WEBROOT."admin/categoryAdd"?>">Створити Розділ</a>
         </li>
 
     </ul>

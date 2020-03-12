@@ -20,10 +20,17 @@
             <div class="col-lg-8 post-list blog-post-list">
                 <div class="single-post">
                     <img class="img-fluid" src="<?php  if(isset($bg_img)) echo PUBLIC_DIR."/img/posts/$bg_img"?>" alt="">
+
                     <ul class="tags">
-                        <li><a href="#">Art</a></li>
-                        <li><a href="#">Technology</a></li>
-                        <li><a href="#">Fashion</a></li>
+                        <?php
+                        if (isset($categories)){
+                            foreach ($categories as $category){
+                                $name = $category["name"].' | ';
+                                echo "<li><a href='#'>$name</a></li> ";
+                            }
+                        }
+
+                        ?>
                     </ul>
                     <a href="#">
                         <h1><?php  if(isset($theme)) echo $theme?></h1>
@@ -60,6 +67,7 @@
                                     $commentCount = count($comments);
                                     $tip = "";
                                     $regLink = WEBROOT."login/register";
+
                                     if (isset($isAuthorized) && !$isAuthorized) $tip = "<div class='text-dark mb-3'><a href='$regLink'>Зареєструйтесь</a>, щоб залишити коментар</div>";
                                     foreach ($comments as $comment) {
                                         $text = $comment["text"];

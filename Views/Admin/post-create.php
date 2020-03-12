@@ -5,7 +5,7 @@
                 <div class="font-weight-bold">Основне зображення публікації</div>
                 <div class="">
 
-                    <div id="avatarImg"  style="background-image: url('<?php if(isset($bg_img)) echo PUBLIC_DIR."/images/posts/$bg_img"; else  echo PUBLIC_DIR."/images/no-image.jpg" ?>')" class="avatar-block text-center border">
+                    <div id="avatarImg"  style="background-image: url('<?php if(isset($bg_img)) echo PUBLIC_DIR."/img/posts/$bg_img"; else  echo PUBLIC_DIR."/images/no-image.jpg" ?>')" class="avatar-block text-center border">
 
                     </div>
                     <label for="bg" class="btn btn-primary px-2 py-1 text-center">
@@ -19,6 +19,28 @@
             <div class="col-12">
                 <label class="font-weight-bold" for="theme">Тема публікації:</label>
                 <input type="text" class="form-control" name="theme" id="theme" value="<?php if(isset($theme)) echo $theme?>" required>
+            </div>
+            <div class="col-12">
+                <label class="font-weight-bold" for="theme">Категорії:</label>
+                <?php
+                    if(isset($categories)){
+                        foreach ($categories as $category){
+                            $checked = '';
+                            $id = $category['id'];
+                            if(isset($selectedCategories)) {
+                                foreach ($selectedCategories as $selected){
+                                    if($selected['id'] == $id) $checked = 'checked';
+                                }
+                            }
+
+                            $name = $category['name'];
+                            echo "<div class=\"form-check \">
+                              <input class=\"form-check-input\" $checked type=\"checkbox\" name='categories[]' id=\"$id\" value=\"$id\">
+                              <label class=\"form-check-label\" for=\"$id\">$name</label>
+                            </div>";
+                        }
+                    }
+                ?>
             </div>
             <div class="col-12">
                 <label class="font-weight-bold" for="content">Публікація:</label>
