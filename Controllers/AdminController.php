@@ -162,9 +162,9 @@ class AdminController extends Controller{
                 $this->set($viewData);
                 $this->render("user-edit");
             } else {
-                if(isset($_POST["name"]) && isset($_POST["surname"])){
+                if(isset($_POST["name"])){
 
-                    $result = $admin->editUser($id,$_POST["name"], $_POST["surname"]);
+                    $result = $admin->editUser($id,$_POST["name"]);
                     if($result){
                         header('Location:'.HOST.'admin/users');
                     }
@@ -250,31 +250,69 @@ class AdminController extends Controller{
 
 
 
-    function about(){
+    function compositions(){
         if($this->checkIsAdmin()){
-            require(ROOT . 'Models/Admin.php');
-            $admin = new Admin();
+            require(ROOT . 'Models/Compositions.php');
+            $compositions = new Compositions();
+            $viewData['compositions'] = $compositions->getCompositions();
+            $this->set($viewData);
+            $this->render("compositions-list");
+
+        } else {
+            header('Location:'.HOST.'admin/login');
+        }
+    }
+    function compositionCreate(){
+        if($this->checkIsAdmin()){
+            require (ROOT.'Models/Compositions.php');
+
+            $compositions = new Compositions();
 
             if(!empty($_POST)){
-                $fields = array('first_name', 'second_name', 'last_name', 'email', 'phone', 'date_of_birth', 'education', 'work', 'exp', 'short_about', 'long_about');
-                $data = $this->setData($_POST, $fields);
-                print_r($data);
-                if(file_exists($_FILES['photo']['tmp_name'])){
-                    print_r($_FILES);
-                    $photo = $this->saveImage(1,$_FILES['photo']['tmp_name'], "");
 
+                $postNeedsData = array('name', 'desc', 'link');
+
+                if($this->checkPostData($postNeedsData)) {
+                    $resultId = $compositions->addComposition($_POST['name'],$_POST['desc'],$_POST['link']);
+                    $result = $compositions->setAttributes($resultId, $_POST['attr_key'], $_POST['attr_value']);
+                    header('Location:'.HOST.'admin/compositions');
                 } else {
-                    $photo = $_POST["photo_old"];
+                    header('Location:'.$_SERVER['HTTP_REFERER']);
                 }
-                $data["photo"] = $photo;
-                $result = $admin->updateTeacher($data);
-                if($result) {
-                    header('Location:'.HOST.'admin/about');
-                }
+
             } else {
-                $viewData = $admin->getTeacher();
+//                $viewData["categories"] = $compositions->getCategories();
+//                $this->set($viewData);
+                $this->render("compositions-edit");
+            }
+
+        } else {
+            header('Location:'.HOST.'admin/login');
+        }
+    }
+    function compositionEdit($id){
+        if($this->checkIsAdmin()){
+            require (ROOT.'Models/Compositions.php');
+
+            $compositions = new Compositions();
+
+            if(!empty($_POST)){
+
+                $postNeedsData = array('name', 'desc', 'link');
+
+                if($this->checkPostData($postNeedsData)) {
+                    $resultId = $compositions->updateComposition($id,$_POST['name'],$_POST['desc'],$_POST['link']);
+                    $result = $compositions->setAttributes($id, $_POST['attr_key'], $_POST['attr_value']);
+//                    header('Location:'.HOST.'admin/compositions');
+                } else {
+                    header('Location:'.$_SERVER['HTTP_REFERER']);
+                }
+
+            } else {
+                $viewData = $compositions->getComposition($id);
+                $viewData['attributes'] = $compositions->getAttributes($id);
                 $this->set($viewData);
-                $this->render("about");
+                $this->render("compositions-edit");
             }
 
         } else {

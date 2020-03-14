@@ -129,10 +129,10 @@ class Admin extends Model
         }
         print($req->errorInfo()[2]);
     }
-    public function editUser($id, $name, $surname){
-        $sql = "UPDATE users SET name = :name, surname = :surname  WHERE id = :id";
+    public function editUser($id, $name){
+        $sql = "UPDATE users SET name = :name  WHERE id = :id";
         $req = Database::getBdd()->prepare($sql);
-        $result = $req->execute(["id" => $id, "name" => $name, "surname" => $surname]);
+        $result = $req->execute(["id" => $id, "name" => $name]);
         if ($result) return $result;
         print($req->errorInfo()[2]);
     }

@@ -47,15 +47,20 @@
         <li class="nav-item">
             <a class="nav-link" href="<?php echo WEBROOT."admin/users"?>">Список Користувачів</a>
         </li>
+
         <li class="nav-item">
             <a class="nav-link" href="<?php echo WEBROOT."admin/postList"?>">Список Публікацій</a>
         </li>
-
+        <li class="nav-item">
+            <a class="nav-link" href="<?php echo WEBROOT."admin/compositions"?>">Відомі композиції</a>
+        </li>
         <span class="w-100 d-block border-bottom border-dark" style="height: 1px"></span>
         <li class="nav-item">
             <a class="nav-link" href="<?php echo WEBROOT."admin/postCreate"?>">Створити Публікацію</a>
         </li>
-
+        <li class="nav-item">
+            <a class="nav-link" href="<?php echo WEBROOT."admin/compositionCreate"?>">Додати Композицію</a>
+        </li>
     </ul>
 
     <div id="content-wrapper">

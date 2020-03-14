@@ -16,7 +16,6 @@
                             <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Фамілія</th>
                                 <th>Ім'я</th>
                                 <th>Коментарі</th>
                                 <th>Редагувати</th>
@@ -26,7 +25,7 @@
                             <tfoot>
                             <tr>
                                 <th>ID</th>
-                                <th>Фамілія</th>
+
                                 <th>Ім'я</th>
                                 <th>Коментарі</th>
                                 <th>Редагувати</th>
@@ -45,7 +44,7 @@
                                     $commentsUrl = WEBROOT."admin/userComments/$id";
                                     echo "<tr class=''>
                                                 <td>$id</td>
-                                                <td>$surname</td>
+                                          
                                                 <td>$name</td>
                                                 <td class='text-center'><a href='$commentsUrl' class='btn btn-dark btn-sm'>Коментарі</a></td>
                                                 <td class='text-center'><a href='$editUrl' class='btn btn-primary btn-sm'>Редагувати</a></td>
