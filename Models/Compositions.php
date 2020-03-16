@@ -40,7 +40,6 @@ class Compositions extends Model
         print($req->errorInfo()[2]);
     }
     public function getAttributes($id){
-        $this->deleteCompositionAttributes($id);
         $sql = "SELECT * FROM compositions_attributes WHERE composition_id = ?";
         $req = Database::getBdd()->prepare($sql);
         $result = $req->execute([$id]);
@@ -51,7 +50,6 @@ class Compositions extends Model
         print($req->errorInfo()[2]);
     }
     public function getComposition($id){
-        $this->deleteCompositionAttributes($id);
         $sql = "SELECT * FROM compositions WHERE id = ?";
         $req = Database::getBdd()->prepare($sql);
         $result = $req->execute([$id]);
@@ -65,13 +63,17 @@ class Compositions extends Model
         $sql = "DELETE FROM compositions_attributes WHERE composition_id = ?";
         $req = Database::getBdd()->prepare($sql);
         $result = $req->execute([$id]);
-        if ($result) {
-            $data = $req->fetchAll();
-            return $data;
-        }
+        if ($result) return $result;
         print($req->errorInfo()[2]);
     }
-
+    public function delete($id){
+        $this->deleteCompositionAttributes($id);
+        $sql = "DELETE FROM compositions WHERE id = ?";
+        $req = Database::getBdd()->prepare($sql);
+        $result = $req->execute([$id]);
+        if ($result) return $result;
+        print($req->errorInfo()[2]);
+    }
 
 
 }

@@ -30,7 +30,7 @@
             <nav id="nav-menu-container">
                 <ul class="nav-menu">
                     <li class="menu-active"><a href="<?php echo WEBROOT?>">Головна</a></li>
-                    <li><a href="about.html">Композитори</a></li>
+                    <li><a href="<?php echo WEBROOT.'composers'?>">Композитори</a></li>
                     <li><a href="<?php echo WEBROOT.'compositions'?>">Відомі твори</a></li>
                     <li><a href="service.html">Ноти</a></li>
                     <li><a href="team.html">Сучасна класична музика</a></li>

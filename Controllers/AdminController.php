@@ -248,8 +248,89 @@ class AdminController extends Controller{
     }
 
 
+    function composers(){
+        if($this->checkIsAdmin()){
+            require(ROOT . 'Models/Composers.php');
+            $composers = new Composers();
+            $viewData['composers'] = $composers->getComposers();
+            $this->set($viewData);
+            $this->render("composers-list");
 
+        } else {
+            header('Location:'.HOST.'admin/login');
+        }
+    }
+    function composerCreate(){
+        if($this->checkIsAdmin()){
+            require(ROOT . 'Models/Composers.php');
+            $composers = new Composers();
+            if(!empty($_POST)){
 
+                $postNeedsData = array('name', 'description', 'date_of_birth');
+                if(file_exists($_FILES['avatar']['tmp_name'])){
+                    print_r($_FILES);
+                    $avatar = $this->saveImage(random_int(0, 1000), $_FILES['avatar']['tmp_name'], "composers/");
+
+                } else {
+                    header('Location:'.$_SERVER['HTTP_REFERER']);
+                }
+                if($this->checkPostData($postNeedsData)) {
+                    $result = $composers->addComposer($_POST['name'],$_POST['description'],$_POST['date_of_birth'], $_POST['date_of_death'] || null, $avatar);
+                    header('Location:'.HOST.'admin/composers');
+                } else {
+                    header('Location:'.$_SERVER['HTTP_REFERER']);
+                }
+
+            } else {
+                $this->render("composer-edit");
+            }
+
+        } else {
+            header('Location:'.HOST.'admin/login');
+        }
+    }
+    function composerEdit($id){
+        if($this->checkIsAdmin()){
+            require(ROOT . 'Models/Composers.php');
+            $composers = new Composers();
+
+            if(!empty($_POST)){
+
+                $postNeedsData = array('name', 'description', 'date_of_birth');
+                if(file_exists($_FILES['avatar']['tmp_name'])){
+                    $avatar = $this->saveImage(random_int(0, 1000), $_FILES['avatar']['tmp_name'], "composers/");
+
+                } else {
+                   header('Location:'.$_SERVER['HTTP_REFERER']);
+                }
+                if($this->checkPostData($postNeedsData)) {
+
+                    $result = $composers->editComposer($id,$_POST['name'],$_POST['description'],$_POST['date_of_birth'], $_POST['date_of_death'], $avatar);
+                   if($result) header('Location:'.HOST.'admin/composers');
+                } else {
+                    header('Location:'.$_SERVER['HTTP_REFERER']);
+                }
+
+            } else {
+                $viewData = $composers->getComposer($id);
+                $this->set($viewData);
+                $this->render("composer-edit");
+            }
+
+        } else {
+            header('Location:'.HOST.'admin/login');
+        }
+    }
+    function composerDelete($id){
+        if($this->checkIsAdmin()){
+            require(ROOT . 'Models/Composers.php');
+            $composers = new Composers();
+            $result = $composers->delete($id);
+            if($result)header('Location:'.$_SERVER['HTTP_REFERER']);
+        } else {
+            header('Location:'.HOST.'admin/login');
+        }
+    }
     function compositions(){
         if($this->checkIsAdmin()){
             require(ROOT . 'Models/Compositions.php');
@@ -273,7 +354,7 @@ class AdminController extends Controller{
                 $postNeedsData = array('name', 'desc', 'link');
 
                 if($this->checkPostData($postNeedsData)) {
-                    $resultId = $compositions->addComposition($_POST['name'],$_POST['desc'],$_POST['link']);
+                    $resultId = $compositions->addComposition($_POST['name'],$_POST['desc'],$this->getYoutubeEmbedUrl($_POST['link']));
                     $result = $compositions->setAttributes($resultId, $_POST['attr_key'], $_POST['attr_value']);
                     header('Location:'.HOST.'admin/compositions');
                 } else {
@@ -281,8 +362,7 @@ class AdminController extends Controller{
                 }
 
             } else {
-//                $viewData["categories"] = $compositions->getCategories();
-//                $this->set($viewData);
+
                 $this->render("compositions-edit");
             }
 
@@ -301,9 +381,9 @@ class AdminController extends Controller{
                 $postNeedsData = array('name', 'desc', 'link');
 
                 if($this->checkPostData($postNeedsData)) {
-                    $resultId = $compositions->updateComposition($id,$_POST['name'],$_POST['desc'],$_POST['link']);
+                    $resultId = $compositions->updateComposition($id,$_POST['name'],$_POST['desc'],$this->getYoutubeEmbedUrl($_POST['link']));
                     $result = $compositions->setAttributes($id, $_POST['attr_key'], $_POST['attr_value']);
-//                    header('Location:'.HOST.'admin/compositions');
+                    header('Location:'.HOST.'admin/compositions');
                 } else {
                     header('Location:'.$_SERVER['HTTP_REFERER']);
                 }
@@ -318,6 +398,29 @@ class AdminController extends Controller{
         } else {
             header('Location:'.HOST.'admin/login');
         }
+    }
+    function compositionDelete($id){
+        if($this->checkIsAdmin()){
+            require(ROOT . 'Models/Compositions.php');
+            $compositions = new Compositions();
+            $result = $compositions->delete($id);
+            if($result)header('Location:'.$_SERVER['HTTP_REFERER']);
+        } else {
+            header('Location:'.HOST.'admin/login');
+        }
+    }
+    function getYoutubeEmbedUrl($url){
+        $shortUrlRegex = '/youtu.be\/([a-zA-Z0-9_]+)\??/i';
+        $longUrlRegex = '/youtube.com\/((?:embed)|(?:watch))((?:\?v\=)|(?:\/))(\w+)/i';
+
+        if (preg_match($longUrlRegex, $url, $matches)) {
+            $youtube_id = $matches[count($matches) - 1];
+        }
+
+        if (preg_match($shortUrlRegex, $url, $matches)) {
+            $youtube_id = $matches[count($matches) - 1];
+        }
+        return 'https://www.youtube.com/embed/' . $youtube_id ;
     }
     function categories(){
         if(!$this->checkIsAdmin()) header('Location:'.HOST.'admin/login');

@@ -6,6 +6,7 @@
         <div class="card-header">
             <i class="fas fa-table"></i>
             Відомі композиції</div>
+        <a href="<?php echo WEBROOT."admin/compositionCreate"?>" class="btn-primary btn btn-sm ml-auto text-light">Додати композицію</a>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -13,7 +14,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Назва</th>
-                        <th>Дата створення</th>
+
                         <th>Редагувати</th>
                         <th>Видалити</th>
                     </tr>
@@ -22,7 +23,6 @@
                     <tr>
                         <th>ID</th>
                         <th>Назва</th>
-                        <th>Дата створення</th>
                         <th>Редагувати</th>
                         <th>Видалити</th>
                     </tr>
@@ -41,7 +41,7 @@
                                                 <td>$id</td>
                                                 <td>$name</td>
                                                 <td class='text-center'><a href='$editUrl' class='btn btn-primary btn-sm'>Редагувати</a></td>
-                                                <td class='text-center'><a href='$editUrl' class='btn btn-danger btn-sm'>Коментарі</a></td>
+                                                <td class='text-center'><a href='$deleteUrl' class='btn btn-danger btn-sm'>Видалити</a></td>
                                             </tr>";
                         }
                     }

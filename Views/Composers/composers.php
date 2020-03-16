@@ -23,118 +23,33 @@
             </div>
         </div>
         <div class="row justify-content-center d-flex align-items-center">
-            <div class="col-md-3 single-team">
-                <div class="thumb">
-                    <img class="img-fluid" src="img/pages/t1.jpg" alt="">
-                    <div class="align-items-center justify-content-center d-flex">
-                        <a href="#"><i class="fa fa-facebook"></i></a>
-                        <a href="#"><i class="fa fa-twitter"></i></a>
-                        <a href="#"><i class="fa fa-linkedin"></i></a>
-                    </div>
-                </div>
-                <div class="meta-text mt-30 text-center">
-                    <h4>Ethel Davis</h4>
-                    <p>Managing Director (Sales)</p>
-                </div>
-            </div>
-            <div class="col-md-3 single-team">
-                <div class="thumb">
-                    <img class="img-fluid" src="img/pages/t2.jpg" alt="">
-                    <div class="align-items-center justify-content-center d-flex">
-                        <a href="#"><i class="fa fa-facebook"></i></a>
-                        <a href="#"><i class="fa fa-twitter"></i></a>
-                        <a href="#"><i class="fa fa-linkedin"></i></a>
-                    </div>
-                </div>
-                <div class="meta-text mt-30 text-center">
-                    <h4>Rodney Cooper</h4>
-                    <p>Creative Art Director (Project)</p>
-                </div>
-            </div>
-            <div class="col-md-3 single-team">
-                <div class="thumb">
-                    <img class="img-fluid" src="img/pages/t3.jpg" alt="">
-                    <div class="align-items-center justify-content-center d-flex">
-                        <a href="#"><i class="fa fa-facebook"></i></a>
-                        <a href="#"><i class="fa fa-twitter"></i></a>
-                        <a href="#"><i class="fa fa-linkedin"></i></a>
-                    </div>
-                </div>
-                <div class="meta-text mt-30 text-center">
-                    <h4>Dora Walker</h4>
-                    <p>Senior Core Developer</p>
-                </div>
-            </div>
-            <div class="col-md-3 single-team">
-                <div class="thumb">
-                    <img class="img-fluid" src="img/pages/t4.jpg" alt="">
-                    <div class="align-items-center justify-content-center d-flex">
-                        <a href="#"><i class="fa fa-facebook"></i></a>
-                        <a href="#"><i class="fa fa-twitter"></i></a>
-                        <a href="#"><i class="fa fa-linkedin"></i></a>
-                    </div>
-                </div>
-                <div class="meta-text mt-30 text-center">
-                    <h4>Lena Keller</h4>
-                    <p>Creative Content Developer</p>
-                </div>
-            </div>
-            <div class="col-md-3 single-team">
-                <div class="thumb">
-                    <img class="img-fluid" src="img/pages/t1.jpg" alt="">
-                    <div class="align-items-center justify-content-center d-flex">
-                        <a href="#"><i class="fa fa-facebook"></i></a>
-                        <a href="#"><i class="fa fa-twitter"></i></a>
-                        <a href="#"><i class="fa fa-linkedin"></i></a>
-                    </div>
-                </div>
-                <div class="meta-text mt-30 text-center">
-                    <h4>Ethel Davis</h4>
-                    <p>Managing Director (Sales)</p>
-                </div>
-            </div>
-            <div class="col-md-3 single-team">
-                <div class="thumb">
-                    <img class="img-fluid" src="img/pages/t2.jpg" alt="">
-                    <div class="align-items-center justify-content-center d-flex">
-                        <a href="#"><i class="fa fa-facebook"></i></a>
-                        <a href="#"><i class="fa fa-twitter"></i></a>
-                        <a href="#"><i class="fa fa-linkedin"></i></a>
-                    </div>
-                </div>
-                <div class="meta-text mt-30 text-center">
-                    <h4>Rodney Cooper</h4>
-                    <p>Creative Art Director (Project)</p>
-                </div>
-            </div>
-            <div class="col-md-3 single-team">
-                <div class="thumb">
-                    <img class="img-fluid" src="img/pages/t3.jpg" alt="">
-                    <div class="align-items-center justify-content-center d-flex">
-                        <a href="#"><i class="fa fa-facebook"></i></a>
-                        <a href="#"><i class="fa fa-twitter"></i></a>
-                        <a href="#"><i class="fa fa-linkedin"></i></a>
-                    </div>
-                </div>
-                <div class="meta-text mt-30 text-center">
-                    <h4>Dora Walker</h4>
-                    <p>Senior Core Developer</p>
-                </div>
-            </div>
-            <div class="col-md-3 single-team">
-                <div class="thumb">
-                    <img class="img-fluid" src="img/pages/t4.jpg" alt="">
-                    <div class="align-items-center justify-content-center d-flex">
-                        <a href="#"><i class="fa fa-facebook"></i></a>
-                        <a href="#"><i class="fa fa-twitter"></i></a>
-                        <a href="#"><i class="fa fa-linkedin"></i></a>
-                    </div>
-                </div>
-                <div class="meta-text mt-30 text-center">
-                    <h4>Lena Keller</h4>
-                    <p>Creative Content Developer</p>
-                </div>
-            </div>
+            <?php
+                if(isset($composers)){
+                    foreach ($composers as $composer){
+
+                        $id = $composer['id'];
+                        $name = $composer['name'];
+                        $dob = $composer['date_of_birth'];
+                        $dod = $composer["date_of_death"];
+                        $avatar = $composer['avatar'];
+                        $avImg =  PUBLIC_DIR."/img/composers/$avatar";
+                        $detailLink = WEBROOT."composers/detail/$id";
+                        echo " <div class=\"col-md-3 single-team\">
+                                <div class=\"thumb\">
+                                    <img class=\"\" src=\"$avImg\" alt=\"\" >
+                                    <div class=\"align-items-center justify-content-center d-flex\">
+                                        <a href=\"$detailLink\" class='text-light'>Детальніше</a>
+                                    </div>
+                                </div>
+                                <div class=\"meta-text mt-30 text-center\">
+                                    <h4>$name</h4>
+                                    <p>$dob</p>
+                                </div>
+                            </div>";
+                    }
+                }
+            ?>
+
         </div>
     </div>
 </section>

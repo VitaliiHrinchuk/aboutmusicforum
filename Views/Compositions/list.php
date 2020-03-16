@@ -12,46 +12,52 @@
     </div>
 </section>
 <section class="model-area section-gap container" id="cars">
-    <div class="row align-items-center single-model item flex-row-reverse">
-        <div class="col-lg-6 model-left">
-            <div class="title justify-content-between d-flex">
-                <h4 class="mt-20">Audi 3000 msi</h4>
-                <h2>$149<span>/day</span></h2>
-            </div>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </p>
-            <p>
-                Capacity         : 04 Person <br>
-                Doors            : 04 <br>
-                Air Condition    : Dual Zone <br>
-                Transmission     : Automatic
-            </p>
-            <a class="text-uppercase primary-btn" href="#">Book This Car Now</a>
-        </div>
-        <div class="col-lg-6 model-right">
-            <img class="img-fluid" src="<?php echo PUBLIC_DIR; ?>/img/car.jpg" alt="">
-        </div>
-    </div>
-    <div class="row align-items-center single-model item">
-        <div class="col-lg-6 model-left">
-            <div class="title justify-content-between d-flex">
-                <h4 class="mt-20">Audi 3000 msi</h4>
-                <h2>$149<span>/day</span></h2>
-            </div>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </p>
-            <p>
-                Capacity         : 04 Person <br>
-                Doors            : 04 <br>
-                Air Condition    : Dual Zone <br>
-                Transmission     : Automatic
-            </p>
-            <a class="text-uppercase primary-btn" href="#">Book This Car Now</a>
-        </div>
-        <div class="col-lg-6 model-right">
-            <img class="img-fluid" src="<?php echo PUBLIC_DIR; ?>/img/car.jpg" alt="">
-        </div>
-    </div>
+    <?php
+        if(isset($compositions)){
+            foreach ($compositions as $composition){
+                $name = $composition['name'];
+                $desc = $composition['description'];
+                $link = $composition['link'];
+                $attributesHTML = '';
+                foreach ($composition['attributes'] as $attribute){
+                    $key = $attribute['attr_key'];
+                    $value = $attribute['attr_value'];
+                    $attributesHTML .= "$key: $value<br/>";
+                }
+                echo "<div class=\"row align-items-center single-model item flex-row-reverse\">
+                        <div class=\"col-lg-6 model-left\">
+                            <div class=\"title justify-content-between d-flex\">
+                                <h4 class=\"mt-20\">$name</h4>
+                           
+                            </div>
+                            <p>$desc</p>
+                            <p>$attributesHTML</p>
+                      
+                        </div>
+                        <div class=\"col-lg-6 model-right\">
+                             <iframe class='w-100 ' height='300'
+                            src=\"$link\" >
+                            </iframe> 
+                        </div>
+                    </div>";
+            }
+        }
+    ?>
 </section>
+<script>
+    // $(function () {
+    //
+    //     $("iframe").not(":has([src])").each(function () {
+    //
+    //         var ifrm = this;
+    //
+    //         ifrm = (ifrm.contentWindow) ? ifrm.contentWindow : (ifrm.contentDocument.document) ? ifrm.contentDocument.document : ifrm.contentDocument;
+    //
+    //         ifrm.document.open();
+    //         ifrm.document.write($(this).attr("alt"));
+    //         ifrm.document.close();
+    //
+    //     });
+    //
+    // });
+</script>

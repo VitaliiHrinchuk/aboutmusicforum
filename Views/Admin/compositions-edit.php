@@ -22,15 +22,16 @@
             <?php
             if(isset($attributes)){
                 foreach ($attributes as $attribute){
+                    $id = $attribute['id'];
                     $key = $attribute['attr_key'];
                     $value = $attribute['attr_value'];
                     echo "<div class=\"col-6\">
                         <label class=\"font-weight-bold\" for=\"attr_key\">Назва:</label>
-                        <input type=\"text\"  class=\"form-control\" name=\"attr_key[]\" id=\"attr_key\" value='$key' required>
+                        <input type=\"text\"  class=\"form-control\" name=\"attr_key[$id]\" id=\"attr_key\" value='$key' required>
                     </div>
                     <div class=\"col-6\">
                         <label class=\"font-weight-bold\" for=\"attr_value\">Значення:</label>
-                        <input type=\"text\"  class=\"form-control\" name=\"attr_value[]\" id=\"attr_value\" value='$value' required>
+                        <input type=\"text\"  class=\"form-control\" name=\"attr_value[$id]\" id=\"attr_value\" value='$value' required>
                     </div>";
                 }
             }

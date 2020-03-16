@@ -47,7 +47,9 @@
         <li class="nav-item">
             <a class="nav-link" href="<?php echo WEBROOT."admin/users"?>">Список Користувачів</a>
         </li>
-
+        <li class="nav-item">
+            <a class="nav-link" href="<?php echo WEBROOT."admin/composers"?>">Список Композиторів</a>
+        </li>
         <li class="nav-item">
             <a class="nav-link" href="<?php echo WEBROOT."admin/postList"?>">Список Публікацій</a>
         </li>
@@ -60,6 +62,9 @@
         </li>
         <li class="nav-item">
             <a class="nav-link" href="<?php echo WEBROOT."admin/compositionCreate"?>">Додати Композицію</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="<?php echo WEBROOT."admin/composerCreate"?>">Додати Композитора</a>
         </li>
     </ul>
 
