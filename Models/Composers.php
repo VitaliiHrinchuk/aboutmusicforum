@@ -44,7 +44,16 @@ class Composers extends Model
         if ($result) return $result;
         print($req->errorInfo()[2]);
     }
-
+    public function countTable(){
+        $sql = "SELECT COUNT(*) as 'count' FROM `composers`";
+        $req = Database::getBdd()->prepare($sql);
+        $result = $req->execute();
+        if ($result) {
+            $table = $req->fetch();
+            return $table['count'];;
+        }
+        print($req->errorInfo()[2]);
+    }
 
 
 }

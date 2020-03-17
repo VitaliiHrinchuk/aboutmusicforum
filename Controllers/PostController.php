@@ -8,11 +8,16 @@ class PostController extends Controller{
         $categories = new Categories();
         if(!empty($_GET)){
             $title = isset($_GET["title"]) && !empty($_GET["title"]) ? $_GET["title"] : null;
-            if(isset($_GET["offset"])){
-                $posts  = $post->getPostsList($_GET["offset"],$title);
+            if(isset($_GET['category'])) {
+                $posts = $post->getPostsByCategory(isset($_GET["offset"])  ? $_GET["offset"] :  null,$_GET['category']);
             } else {
-                $posts  = $post->getPostsList(null, $title);
+                if(isset($_GET["offset"])){
+                    $posts  = $post->getPostsList($_GET["offset"],$title);
+                } else {
+                    $posts  = $post->getPostsList(null, $title);
+                }
             }
+
         } else {
             $posts  = $post->getPostsList(null, null);
         }
@@ -23,7 +28,7 @@ class PostController extends Controller{
             $post['categories'] = $categories->getByPost($post['id']);
         }
         $viewData["posts"] = $posts;
-
+        $viewData['category_list'] = $categories->getCategories();
         $this->set($viewData);
         $this->render("postList");
 

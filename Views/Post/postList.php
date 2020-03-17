@@ -1,4 +1,17 @@
 
+<section class="banner-area relative" id="home">
+    <div class="overlay overlay-bg"></div>
+    <div class="container">
+        <div class="row d-flex align-items-center justify-content-center">
+            <div class="about-content col-lg-12">
+                <h1 class="text-white">
+                    Новини
+                </h1>
+                <p class="text-white link-nav"><a href="<?php echo WEBROOT; ?>">Головна </a>  <span class="lnr lnr-arrow-right"></span>  <a href="#"> Новини</a></p>
+            </div>
+        </div>
+    </div>
+</section>
 <section class="blog-posts-area section-gap">
     <div class="container">
         <div class="row">
@@ -38,15 +51,7 @@
                                                     <li><a href=\"#\"><span class=\"lnr lnr-bubble\"></span> $comments Коментарів</a></li>
                                                 </ul>
                                             </div>
-                                            <div class=\"social-wrap col-lg-6\">
-                                                <ul>
-                                                    <li><a href=\"#\"><i class=\"fa fa-facebook\"></i></a></li>
-                                                    <li><a href=\"#\"><i class=\"fa fa-twitter\"></i></a></li>
-                                                    <li><a href=\"#\"><i class=\"fa fa-dribbble\"></i></a></li>
-                                                    <li><a href=\"#\"><i class=\"fa fa-behance\"></i></a></li>
-                                                </ul>
-                
-                                            </div>
+
                                         </div>
                                     </div>
                                 </div>";
@@ -86,10 +91,11 @@
                                 </div>
                             </div>";
 
+            } else {
+                echo "<div><i>Нема жодного результату за вашим запитом</i><img src='https://cdn.dribbble.com/users/283708/screenshots/7084440/media/6cd8b29540bcfb6a7693c27f58db7b56.png' class='w-100' alt=''></div>";
             }
 
             ?>
-
 
             </div>
             <div class="col-lg-4 sidebar">
@@ -102,105 +108,20 @@
 
 
                 <div class="single-widget category-widget">
-                    <h4 class="title">Post Categories</h4>
+                    <h4 class="title">Категорії</h4>
                     <ul>
-                        <li><a href="#" class="justify-content-between align-items-center d-flex"><h6>Techlology</h6> <span>37</span></a></li>
-                        <li><a href="#" class="justify-content-between align-items-center d-flex"><h6>Lifestyle</h6> <span>24</span></a></li>
-                        <li><a href="#" class="justify-content-between align-items-center d-flex"><h6>Fashion</h6> <span>59</span></a></li>
-                        <li><a href="#" class="justify-content-between align-items-center d-flex"><h6>Art</h6> <span>29</span></a></li>
-                        <li><a href="#" class="justify-content-between align-items-center d-flex"><h6>Food</h6> <span>15</span></a></li>
-                        <li><a href="#" class="justify-content-between align-items-center d-flex"><h6>Architecture</h6> <span>09</span></a></li>
-                        <li><a href="#" class="justify-content-between align-items-center d-flex"><h6>Adventure</h6> <span>44</span></a></li>
+                        <?php
+                            if(isset($category_list)){
+                                foreach ($category_list as $category){
+                                    $name = $category['name'];
+                                    $id = $category['id'];
+                                    $link =  WEBROOT . "post?category=$id";
+                                    echo  "<li><a href=\"$link\" class=\"justify-content-between align-items-center d-flex\"><h6>$name</h6> </a></li>";
+                                }
+                            }
+                        ?>
                     </ul>
                 </div>
-
-                <div class="single-widget recent-posts-widget">
-                    <h4 class="title">Recent Posts</h4>
-                    <div class="blog-list ">
-                        <div class="single-recent-post d-flex flex-row">
-                            <div class="recent-thumb">
-                                <img class="img-fluid" src="img/blog/r1.jpg" alt="">
-                            </div>
-                            <div class="recent-details">
-                                <a href="blog-single.html">
-                                    <h4>
-                                        Home Audio Recording
-                                        For Everyone
-                                    </h4>
-                                </a>
-                                <p>
-                                    02 hours ago
-                                </p>
-                            </div>
-                        </div>
-                        <div class="single-recent-post d-flex flex-row">
-                            <div class="recent-thumb">
-                                <img class="img-fluid" src="img/blog/r2.jpg" alt="">
-                            </div>
-                            <div class="recent-details">
-                                <a href="blog-single.html">
-                                    <h4>
-                                        Home Audio Recording
-                                        For Everyone
-                                    </h4>
-                                </a>
-                                <p>
-                                    02 hours ago
-                                </p>
-                            </div>
-                        </div>
-                        <div class="single-recent-post d-flex flex-row">
-                            <div class="recent-thumb">
-                                <img class="img-fluid" src="img/blog/r3.jpg" alt="">
-                            </div>
-                            <div class="recent-details">
-                                <a href="blog-single.html">
-                                    <h4>
-                                        Home Audio Recording
-                                        For Everyone
-                                    </h4>
-                                </a>
-                                <p>
-                                    02 hours ago
-                                </p>
-                            </div>
-                        </div>
-                        <div class="single-recent-post d-flex flex-row">
-                            <div class="recent-thumb">
-                                <img class="img-fluid" src="img/blog/r4.jpg" alt="">
-                            </div>
-                            <div class="recent-details">
-                                <a href="blog-single.html">
-                                    <h4>
-                                        Home Audio Recording
-                                        For Everyone
-                                    </h4>
-                                </a>
-                                <p>
-                                    02 hours ago
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-
-                <div class="single-widget tags-widget">
-                    <h4 class="title">Tag Clouds</h4>
-                    <ul>
-                        <li><a href="#">Lifestyle</a></li>
-                        <li><a href="#">Art</a></li>
-                        <li><a href="#">Adventure</a></li>
-                        <li><a href="#">Food</a></li>
-                        <li><a href="#">Techlology</a></li>
-                        <li><a href="#">Fashion</a></li>
-                        <li><a href="#">Architecture</a></li>
-                        <li><a href="#">Food</a></li>
-                        <li><a href="#">Technology</a></li>
-                    </ul>
-                </div>
-
             </div>
         </div>
     </div>

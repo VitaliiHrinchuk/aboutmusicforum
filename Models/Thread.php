@@ -80,6 +80,15 @@ class Thread extends Model
             return $count['count'];
         }
     }
-
+    public function countTable(){
+        $sql = "SELECT COUNT(*) as 'count' FROM `threads`";
+        $req = Database::getBdd()->prepare($sql);
+        $result = $req->execute();
+        if ($result) {
+            $table = $req->fetch();
+            return $table['count'];;
+        }
+        print($req->errorInfo()[2]);
+    }
 }
 ?>

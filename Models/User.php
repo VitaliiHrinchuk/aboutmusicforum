@@ -38,6 +38,15 @@ class User extends Model{
         }
         print($req->errorInfo()[2]);
     }
-
+    public function countTable(){
+        $sql = "SELECT COUNT(*) as 'count' FROM `users`";
+        $req = Database::getBdd()->prepare($sql);
+        $result = $req->execute();
+        if ($result) {
+            $table = $req->fetch();
+            return $table['count'];;
+        }
+        print($req->errorInfo()[2]);
+    }
 }
 ?>

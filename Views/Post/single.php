@@ -6,8 +6,7 @@
                 <h1 class="text-white">
                     <?php  if(isset($theme)) echo $theme?>
                 </h1>
-                <p class="text-white link-nav"><a href="<?php  echo WEBROOT;?>">Головна </a>  <span class="lnr lnr-arrow-right"></span>  <a href="">Новина</a></p>
-            </div>
+                <p class="text-white link-nav"><a href="<?php echo WEBROOT; ?>">Головна </a>  <span class="lnr lnr-arrow-right"></span>  <a href="<?php echo WEBROOT.'post'; ?>"> Новини</a> <span class="lnr lnr-arrow-right"></span>  <a href="#"> <?php  if(isset($theme)) echo $theme?></a></p>
         </div>
     </div>
 </section>
@@ -42,15 +41,6 @@
                                 <ul>
                                     <li><a href="#"><span class="lnr lnr-bubble"></span><?php if(isset($comments)) echo count($comments) ?> Коментарів</a></li>
                                 </ul>
-                            </div>
-                            <div class="social-wrap col-lg-6">
-                                <ul>
-                                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-behance"></i></a></li>
-                                </ul>
-
                             </div>
                         </div>
                     </div>
